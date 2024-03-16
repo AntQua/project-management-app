@@ -1,17 +1,17 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-import NewProject from './components/NewProject.jsx';
-import NoProjectSelected from './components/NoProjectSelected.jsx';
-import ProjectsSidebar from './components/ProjectsSidebar.jsx';
+import NewProject from "./components/NewProject.jsx";
+import NoProjectSelected from "./components/NoProjectSelected.jsx";
+import ProjectsSidebar from "./components/ProjectsSidebar.jsx";
 
 function App() {
   const [projectsState, setProjectsState] = useState({
     selectedProjectId: undefined, // no projects
-    projects: []
+    projects: [],
   });
 
   function handleStartAddProject() {
-    setProjectsState(prevState => {
+    setProjectsState((prevState) => {
       return {
         ...prevState,
         selectedProjectId: null, // adding a new project
@@ -35,21 +35,24 @@ function App() {
     });
   }
 
-  console.log(projectsState);
+  // console.log(projectsState);
 
   let content;
 
   if (projectsState.selectedProjectId === null) {
-    content = <NewProject onAdd={handleAddProject} />
+    content = <NewProject onAdd={handleAddProject} />;
   } else if (projectsState.selectedProjectId === undefined) {
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
 
   return (
-      <main className="h-screen my-8 flex gap-8">
-        <ProjectsSidebar onStartAddProject={handleStartAddProject} />
-        {content}
-      </main>
+    <main className="h-screen my-8 flex gap-8">
+      <ProjectsSidebar
+        onStartAddProject={handleStartAddProject}
+        projects={projectsState.projects}
+      />
+      {content}
+    </main>
   );
 }
 
